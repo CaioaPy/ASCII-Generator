@@ -9,8 +9,7 @@ os.mkdir("acii")
 os.mkdir("html")
 
 #get video
-video = ""
-video_obj = cv2.VideoCapture(video)
+video_obj = cv2.VideoCapture("target")
 
 count = 0
 flag = 1
@@ -32,3 +31,7 @@ for i in range(count):
     )
     #converts to html
     ascii_magic.to_html_file("html/frame" + str(i) + ".html", output, additional_styles = 'background: #222;')
+path = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltoimage.exe'
+config = imgkit.config(wkhtmltoimage = path)
+for i in range(count):
+    imgkit.from_file('html/frame' + str(i) + 'ascii/frame' + 'str(i)' + '.jpg', config=config)
