@@ -16,7 +16,7 @@ flag = 1
 while flag:
     flag, image = video_obj.read()
     try:
-        cv2.imwrite("images/frame$d.jpg" % count, image)
+        cv2.imwrite("images/frame%d.jpg" % count, image)
     except:
         break
     count += 1
@@ -34,10 +34,10 @@ for i in range(count):
 path = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltoimage.exe'
 config = imgkit.config(wkhtmltoimage = path)
 for i in range(count):
-    imgkit.from_file('html/frame' + str(i) + 'ascii/frame' + 'str(i)' + '.jpg', config=config)
+    imgkit.from_file('html/frame' + str(i) + '.html', 'ascii/frame' + str(i) + '.jpg', config=config)
 frame = cv2.imread("ascii/frame0.jpg")
 ih, iw, il = frame.shape
-fourcc = cv2.VideoWriter_fourcc(*'.mp4')
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 video = cv2.VideoWriter("asciiVideo.mp4", fourcc, 23.98, (iw, ih))
 for i in range(count):
     image="ascii/frame" + str(i) + ".jpg"
