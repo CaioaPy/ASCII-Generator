@@ -21,3 +21,14 @@ while flag:
     except:
         break
     count += 1
+for i in range(count):
+    #separate the images in format
+    s = "images/frame" + str(i) + ".jpg"
+    output = ascii_magic.from_image_file(
+        s,
+        columns = 250,
+        width_radio = 2,
+        mode = ascii_magic.Modes.HTML
+    )
+    #converts to html
+    ascii_magic.to_html_file("html/frame" + str(i) + ".html", output, additional_styles = 'background: #222;')
