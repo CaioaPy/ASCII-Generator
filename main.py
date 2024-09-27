@@ -35,3 +35,12 @@ path = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltoimage.exe'
 config = imgkit.config(wkhtmltoimage = path)
 for i in range(count):
     imgkit.from_file('html/frame' + str(i) + 'ascii/frame' + 'str(i)' + '.jpg', config=config)
+frame = cv2.imread("ascii/frame0.jpg")
+ih, iw, il = frame.shape
+fourcc = cv2.VideoWriter_fourcc(*'.mp4')
+video = cv2.VideoWriter("asciiVideo.mp4", fourcc, 23.98, (iw, ih))
+for i in range(count):
+    image="ascii/frame" + str(i) + ".jpg"
+    video.write(cv2.imread(image))
+cv2.destroyAllWindows()
+video.release()
