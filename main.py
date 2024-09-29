@@ -7,7 +7,7 @@ os.makedirs("images", exist_ok=True)
 os.makedirs("ascii", exist_ok=True)
 os.makedirs("html", exist_ok=True)
 
-video_obj = cv2.VideoCapture("target")
+video_obj = cv2.VideoCapture("target.mp4")
 
 count = 0
 flag = True
@@ -18,18 +18,25 @@ while flag:
     cv2.imwrite(f"images/frame{count}.jpg", image)
     count += 1
 
+if count == 0:
+    print("Error: No frames were extracted from the video.")
+    exit()
+
 for i in range(count):
     s = f"images/frame{i}.jpg"
-    output = ascii_magic.from_image_file(
-        s,
-        columns=250,
-        width_ratio=2,
-        mode=ascii_magic.Modes.HTML
-    )
-    ascii_magic.to_html_file(f"html/frame{i}.html", output, additional_styles='background: #222;')
-    print(f"Generated HTML: html/frame{i}.html")  # Log the HTML creation
+    try:
+        output = ascii_magic.from_image_file(
+            s,
+            columns=250,
+            width_ratio=2,
+            mode=ascii_magic.Modes.HTML
+        )
+        ascii_magic.to_html_file(f"html/frame{i}.html", output, additional_styles='background: #222;')
+        print(f"Generated HTML: html/frame{i}.html") 
+    except Exception as e:
+        print(f"Error generating ASCII for {s}: {e}")
 
-path = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltoimage.exe'  # Ensure this path is correct
+path = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltoimage.exe' 
 config = imgkit.config(wkhtmltoimage=path)
 
 for i in range(count):
@@ -43,6 +50,11 @@ for i in range(count):
             print(f"Error: Failed to create {img_output} from {html_path}")
     except Exception as e:
         print(f"Conversion failed for {html_path}: {e}")
+
+for i in range(count):
+    image_path = f"ascii/frame{i}.jpg"
+    if not os.path.exists(image_path):
+        print(f"Warning: {image_path} does not exist. Please check the previous steps.")
 
 frame_path = "ascii/frame0.jpg"
 if not os.path.exists(frame_path):
@@ -66,5 +78,6 @@ for i in range(count):
         continue
     video.write(img)
 
+# Clean up
 cv2.destroyAllWindows()
 video.release()
