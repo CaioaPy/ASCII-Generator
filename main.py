@@ -27,9 +27,9 @@ for i in range(count):
         mode=ascii_magic.Modes.HTML
     )
     ascii_magic.to_html_file(f"html/frame{i}.html", output, additional_styles='background: #222;')
-    print(f"Generated HTML: html/frame{i}.html")
+    print(f"Generated HTML: html/frame{i}.html")  # Log the HTML creation
 
-path = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltoimage.exe' 
+path = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltoimage.exe'  # Ensure this path is correct
 config = imgkit.config(wkhtmltoimage=path)
 
 for i in range(count):
